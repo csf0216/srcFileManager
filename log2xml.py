@@ -8,6 +8,8 @@ pattLeave = re.compile('\n\s+return')
 pattTime = re.compile('(\d+:\d+:\d+\.\d+)')
 
 fd = open(logDir+r'\stalog','r+')
+#fd = open(logDir+r'\p2plog','r+')
+#fd = open(logDir+r'\hostapdlog','r+')
 
 refinelog = ''
 
