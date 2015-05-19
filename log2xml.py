@@ -7,7 +7,7 @@ pattFunc = re.compile('\n\{[\d \D]+?\n\}')
 pattLeave = re.compile('\n\s+return')
 pattTime = re.compile('(\d+:\d+:\d+\.\d+)')
 
-fd = open(logDir+r'\stalog','r+')
+fd = open(logDir+r'\assoc','r+')
 #fd = open(logDir+r'\p2plog','r+')
 #fd = open(logDir+r'\hostapdlog','r+')
 
@@ -31,14 +31,14 @@ finally:
 
 stack = 0
 curPos = 0
-traceBk = 50000
+traceBk = 200000
 outlog = ''
 for line in refinelog.split('\n'):
     print stack
     if 'Enter:' in line:
         l = line.find('Enter:')
         pos = curPos+l
-        funcName = line[l+7:]
+        funcName = re.findall('Enter: ([a-z0-9_]*)',line)[0]
         outlog += line[:l]+'    '*stack+line[l:]+'\n'
         if pos+traceBk>len(refinelog):
             posEnd = len(refinelog)
@@ -50,7 +50,7 @@ for line in refinelog.split('\n'):
     elif 'Leave:' in line:
         l = line.find('Leave:')
         pos = curPos+l
-        funcName = line[l+7:]
+        funcName = re.findall('Leave: ([a-z0-9_]*)',line)[0]
         if pos-traceBk>0:
             posStart = pos-traceBk
         else:
